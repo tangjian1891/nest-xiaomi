@@ -1,4 +1,13 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Render } from '@nestjs/common';
 
-@Controller('login')
-export class LoginController {}
+@Controller('admin/login')
+export class LoginController {
+
+
+  @Get()
+  @Render('admin/login.hbs')
+  index(){
+      console.log("进来了吗")
+    return {name:"你好啊"}
+  }
+}
