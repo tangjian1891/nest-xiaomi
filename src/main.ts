@@ -31,7 +31,6 @@ async function bootstrap() {
 
   // hbs.registerPartials(__dirname + '/views/admin/public', function (err) {
   hbs.registerPartials('./views/admin/public', function(err) {
-    console.log('有错误吗', err);
   });
   await app.listen(3000);
   console.log('http://localhost:3000');

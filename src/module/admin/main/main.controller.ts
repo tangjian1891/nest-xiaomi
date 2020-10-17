@@ -2,9 +2,10 @@ import { Controller, Get, Render } from '@nestjs/common';
 
 @Controller('admin/main')
 export class MainController {
-  @Get()
+  @Get('index')
   @Render('admin/main/index')
   index() {
+    console.log("看到了吗")
     return {};
   }
 

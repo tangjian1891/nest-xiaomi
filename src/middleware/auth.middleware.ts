@@ -1,11 +1,10 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { RSA_NO_PADDING } from 'constants';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   use(req: any, res: any, next: () => void) {
     const url = req.baseUrl;
-
+    console.log(`ur:${url}`)
     const userInfo = req.session.userInfo;
     if (userInfo && userInfo.username) {
       next();
@@ -13,11 +12,12 @@ export class AuthMiddleware implements NestMiddleware {
       if (
         url === '/admin/login' ||
         url === '/admin/code' ||
-        url === '/admin/login/doLogin'
+        url === '/admin/login/doLogin'||
+        url === '/admin/add'
       ) {
         next();
       }else{
-        res.redirect('admin/login')
+        res.redirect('/admin/login')
       }
     }
   }
