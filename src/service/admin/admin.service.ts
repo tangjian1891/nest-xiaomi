@@ -8,7 +8,7 @@ export class AdminService {
   constructor(@InjectModel('Admin') private readonly adminModel) {}
 
   async find(user) {
-    return await this.adminModel.find();
+    return await this.adminModel.find(user);
   }
 
   async addData(userData) {

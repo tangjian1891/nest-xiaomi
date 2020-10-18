@@ -7,6 +7,7 @@ export class AuthMiddleware implements NestMiddleware {
     console.log(`ur:${url}`)
     const userInfo = req.session.userInfo;
     if (userInfo && userInfo.username) {
+      res.locals.userInfo=userInfo
       next();
     } else {
       if (

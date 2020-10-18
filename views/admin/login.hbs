@@ -9,6 +9,7 @@
 
 <body>
     <div class="container">
+        <p>{{message}}</p>
         <div id="login">
             <form action="/admin/login/doLogin" method="post" id="myform">
                 <div class="l_title">小米商城后台管理系统-IT营</div>
@@ -26,5 +27,22 @@
     </div>
 
 </body>
+<script>
+    window.onload = function () {
+        var clearFlag = "{{message}}"
+        if (clearFlag) {
+            console.log(clearFlag)
+            console.log("执行了清空操作")
+            setTimeout(() => {
+                const username = document.querySelector("#username")
+                const password = document.querySelector("#password")
+                username.value=""
+                password.value = ""
+                console.log("定时了啊")
+            }, 1000)
+        }
+
+    }
+</script>
 
 </html>
