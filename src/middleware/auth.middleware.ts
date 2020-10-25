@@ -10,16 +10,22 @@ export class AuthMiddleware implements NestMiddleware {
       res.locals.userInfo=userInfo
       next();
     } else {
-      if (
-        url === '/admin/login' ||
-        url === '/admin/code' ||
-        url === '/admin/login/doLogin'||
-        url === '/admin/add'
-      ) {
-        next();
-      }else{
-        res.redirect('/admin/login')
+      // 否则手动加入数据，并放行
+      req.session.userInfo={
+        username:"admin",
+        password:"123456"
       }
+      next()
+      // if (
+      //   url === '/admin/login' ||
+      //   url === '/admin/code' ||
+      //   url === '/admin/login/doLogin'||
+      //   url === '/admin/add'
+      // ) {
+      //   next();
+      // }else{
+      //   res.redirect('/admin/login')
+      // }
     }
   }
 }

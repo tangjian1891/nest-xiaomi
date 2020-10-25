@@ -1,0 +1,40 @@
+{{> page_header}}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!--
+                列表展示
+            -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="th">
+                        <th>角色名称</th>
+                        <th>角色描述</th>
+                        <th>增加时间</th>
+                        <th class="text-center">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each roleList}}
+                    <tr>
+                        <td>{{this.title}}</td>
+                        <td>{{this.description}}</td>
+                        {{!-- <td>{{../helper.formatTime('1603548103687')}}</td> --}}
+                        <td>{{../helper.formatTime this.add_time }}</td>
+                        <td class="text-center">
+                            <a href="/admin/role/edit?id={{this._id}}">修改</a>
+                            　<a class="delete" href="/admin/role/delete?id={{this._id}}">删除</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

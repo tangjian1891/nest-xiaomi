@@ -47,28 +47,27 @@ export class LoginController {
   async doLogin(@Body() body, @Request() req, @Response() res, @Next() next) {
     const { username, password, code } = body;
     try {
-      // 验证二维码
-      if (code.toUpperCase() === req.session.code.toUpperCase()) {
-        const user = await this.adminService.find({
+      // 验证二维码  不验证二维码
+      // if (code.toUpperCase() === req.session.code.toUpperCase()) {
+        const user = await this.adminService.findUser({
           username,
           password: this.toolsService.getMd5(password),
         });
-  
+
         if (user.length > 0) {
           req.session.userInfo = user[0];
           // 登录成功，重定向到后台管理首页
-          res.redirect('/admin/main/index'); //重定向，绝对路径，不然会追加 
+          res.redirect('/admin/main/index'); //重定向，绝对路径，不然会追加
         } else {
           res.render('admin/login.hbs', {
             message: '账号或密码错误',
           });
         }
-      } else {
-        res.render('admin/login.hbs', {
-          message: '验证码错误',
-        });
-      }
-      
+      // } else {
+      //   res.render('admin/login.hbs', {
+      //     message: '验证码错误',
+      //   });
+      // }
     } catch (error) {
       res.render('admin/login.hbs', {
         message: '验证码错误',
@@ -105,11 +104,15 @@ export class LoginController {
     console.log('进入首页子路由');
     return {};
   }
-  // @Get('add')
-  // async add(){
-  //     // 添加mongo数据
-  //    await this.adminService.addData({username:"admin",password:this.toolsService.getMd5('123456')})
 
-  //   return 'ok'
-  // }
+//   @Get('add')
+//   async add() {
+//     // 添加mongo数据
+//     await this.adminService.addData({
+//       username: 'admin',
+//       password: this.toolsService.getMd5('123456'),
+//     });
+
+//     return 'ok';
+//   }
 }
