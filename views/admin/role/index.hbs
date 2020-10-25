@@ -11,16 +11,17 @@
                 <thead>
                     <tr class="th">
                         <th>角色名称</th>
-                        <th>角色描述</th>
+                        <th>角色名称</th>
                         <th>增加时间</th>
                         <th class="text-center">操作</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each roleList}}
+                    {{#each data}}
                     <tr>
                         <td>{{this.title}}</td>
                         <td>{{this.description}}</td>
+                     
                         {{!-- <td>{{../helper.formatTime('1603548103687')}}</td> --}}
                         <td>{{../helper.formatTime this.add_time }}</td>
                         <td class="text-center">

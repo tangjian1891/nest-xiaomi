@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { RoleInterface } from 'src/interface/role.interface';
-import { Role, RoleSchem } from 'src/schema/role.schema';
+import { Role } from 'src/schema/role.schema';
 @Injectable()
 export class RoleService {
   constructor(@InjectModel(Role.name) private roleModel: Model<any>) {}

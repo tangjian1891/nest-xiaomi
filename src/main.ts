@@ -30,9 +30,13 @@ async function bootstrap() {
   );
 
   // hbs.registerPartials(__dirname + '/views/admin/public', function (err) {
-  hbs.registerPartials('./views/admin/public', function(err) {
+  hbs.registerPartials('./views/admin/public', function(err) {});
+
+  hbs.registerHelper('isSelect', function(role, role_id) {
+    console.log(JSON.stringify(role._id) == JSON.stringify(role_id))
+    return JSON.stringify(role._id) == JSON.stringify(role_id);
   });
   await app.listen(3000);
-  console.log('http://localhost:3000');
+  console.log('http://localhost:3000/admin/login');
 }
 bootstrap();
