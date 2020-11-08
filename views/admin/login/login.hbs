@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.0-alpha2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.0-alpha2/js/bootstrap.min.js"></script>
+    <style>
+        .login_area {
+            width: 500px;
+            height: 500px;
+            margin: 200px auto;
+        }
+        .error{
+            color:red;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="error">{{message}}</p>
+    <div class="login_area">
+        <form action="/admin/login/doLogin" method="POST" >
+            <div class="l_title">简单的登录</div>
+            <div>
+                管理员姓名：<input autocomplete="off" class="text" type="text" name="username" id="username">
+            </div>
+            <div>
+                管理员密码：<input autocomplete="off" class="text" type="password" name="password" id="password">
+            </div>
+            <div>
+                验　证　码：<input autocomplete="off" id="verify" type="text" name="code">
+                <img src="/admin/login/code" alt="验证码" id="code">
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary" name="dosubmit" value="登录">
+            </div>
+          
+        </form>
+    </div>
+    <script>
+        window.document.addEventListener('DOMContentLoaded',function(){
+            const codeDOM=document.querySelector('#code')
+
+            codeDOM.addEventListener('click',function(){
+                const time=new Date().getTime()
+                this.src=`/admin/login/code?date=${time}`
+            })
+        })
+    </script>
+</body>
+
+</html>

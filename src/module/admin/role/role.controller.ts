@@ -64,6 +64,11 @@ export class RoleController {
       };
     }
   }
+  /**
+   * 
+   * @param body 删除
+   * @param res 
+   */
   @Post('doEdit')
   async doEdit(@Body() body, @Response() res) {
     const result = await this.roleService.update({ _id: body._id }, body);
@@ -72,14 +77,16 @@ export class RoleController {
     res.redirect('/admin/role');
   }
 
+  /**
+   * 删除角色
+   * @param id 
+   * @param res 
+   */
   @Get('delete')
   async delete(@Query('id') id, @Response() res) {
     const result = await this.roleService.delete({ _id: id });
     res.redirect('/admin/role');
   }
 
-  // @Get('add')
-  // async addData() {
-  //   return await this.roleService.addData();
-  // }
+ 
 }

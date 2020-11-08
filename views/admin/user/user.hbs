@@ -1,0 +1,87 @@
+{{> page_layout}}
+
+{{!-- 侧边栏 --}}
+<div class='content'>
+    {{>page_aside}}
+    {{!-- 主题区域 --}}
+    <div class="main">
+        {{!-- 暂时没有搜索页面 --}}
+        这是用户
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">序号</th>
+                    <th scope="col">用户名</th>
+                    <th scope="col">所属角色</th>
+                    <th scope="col">添加时间</th>
+                    <th class="text-center">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>{{this.username}}</td>
+                    <td>{{this.role.0.title}}</td>
+                    <td>{{this.role.add_time}}</td>
+                    <td class="text-center">
+                        {{!-- <a href="/admin/user/delete?id={{this._id}}">删除</a> --}}
+                        <a href="#" class="btn btn-primary delete"
+                            onclick="del('{{this._id}}','{{this.username}}')">删除</a>
+                        <a href="/admin/user/edit?id={{this._id}}">修改</a>
+
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">提示</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                确认删除吗?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary confirm-del">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let id = null
+    window.document.addEventListener('DOMContentLoaded', function () {
+        $('.confirm-del').on('click', function () {
+            $('#exampleModal').modal('hide')
+            
+            {{!-- a标签可以用来发送get请求 --}}
+            window.location.href=`/admin/user/delete?id=`+id
+            id = null
+        })
+
+    })
+
+    function del(_id, username) {
+        console.log(_id, username)
+        id = _id
+
+        $('.modal-body').text(`确认删除-${username}用户吗?`)
+        $('#exampleModal').modal({
+            keyboard: false
+        })
+    }
+
+
+</script>

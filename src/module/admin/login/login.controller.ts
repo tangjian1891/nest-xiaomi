@@ -4,6 +4,7 @@ import {
   Get,
   Next,
   Post,
+  Query,
   Render,
   Request,
   Response,
@@ -19,23 +20,29 @@ export class LoginController {
   ) {}
 
   /**
-   * 登录页面
+   * 跳转 登录页面
    */
   @Get('login')
-  @Render('admin/login.hbs')
-  async toLogin() {
-    return { name: '你好啊' };
+  @Render('admin/login/login.hbs')
+  async toLogin(@Query('type') type) {
+    let message=""
+    if(type==1){
+      message="账户或密码错误"
+    }else if(type==2){
+      message="验证码错误"
+    }
+    return { message };
   }
 
   /**
    * 获取验证码
    */
-  @Get('code')
+  @Get('login/code')
   async getCode(@Request() req, @Response() res) {
     const svgCaptcha = await this.toolsService.getCaptcha();
     req.session.code = svgCaptcha.text;
     console.log('当前验证码', req.session.code);
-    res.type('image/svg+xml');
+    res.type('image/svg+xml'); //这个返回的类型
     res.send(svgCaptcha.data);
   }
 
@@ -59,9 +66,7 @@ export class LoginController {
           // 登录成功，重定向到后台管理首页
           res.redirect('/admin/main/index'); //重定向，绝对路径，不然会追加
         } else {
-          res.render('admin/login.hbs', {
-            message: '账号或密码错误',
-          });
+          res.redirect('/admin/login?type=1' );
         }
       // } else {
       //   res.render('admin/login.hbs', {
@@ -69,7 +74,7 @@ export class LoginController {
       //   });
       // }
     } catch (error) {
-      res.render('admin/login.hbs', {
+      res.render('admin/login/login.hbs', {
         message: '验证码错误',
       });
     }
@@ -81,12 +86,12 @@ export class LoginController {
   @Get('loginOut')
   loginOut(@Request() req, @Response() res) {
     req.session.userinfo = null;
-    res.redirect('/admin/login');
+    res.redirect('/admin/login/login');
     // res.render('admin/login.hbs');
   }
 
   /**
-   * 首页
+   * 首页欢迎页
    */
   @Get('main/index')
   @Render('admin/main/index.hbs')
@@ -98,21 +103,11 @@ export class LoginController {
   /**
    * 首页欢迎页面
    */
-  @Get('main/welcome')
-  @Render('admin/main/welcome.hbs')
-  welcome() {
-    console.log('进入首页子路由');
-    return {};
-  }
+  // @Get('main/welcome')
+  // @Render('admin/main/welcome.hbs')
+  // welcome() {
+  //   console.log('');
+  //   return {};
+  // }
 
-//   @Get('add')
-//   async add() {
-//     // 添加mongo数据
-//     await this.adminService.addData({
-//       username: 'admin',
-//       password: this.toolsService.getMd5('123456'),
-//     });
-
-//     return 'ok';
-//   }
 }

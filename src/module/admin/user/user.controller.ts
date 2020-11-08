@@ -19,8 +19,8 @@ export class UserController {
     private toolService: ToolsService,
   ) {}
 
-  @Get()
-  @Render('admin/user/index.hbs')
+  @Get('index')
+  @Render('admin/user/user.hbs')
   async find() {
     // 获取用户列表
     // const data = await this.userService.find();
@@ -67,7 +67,7 @@ export class UserController {
     }
     // 获取单个用户列表
     const data = await this.userService.update({ _id: body._id }, body);
-    res.redirect('/admin/user');
+    res.redirect('/admin/user/index');
   }
 
   /**
@@ -93,12 +93,16 @@ export class UserController {
     }
     const data = await this.userService.save(body);
 
-    res.redirect('/admin/user');
+    res.redirect('/admin/user/index');
   }
+
+  /**
+   * 删除用户
+   */
   @Get('delete')
   async delete(@Query('id') id, @Response() res) {
     await this.userService.delete({ _id: id });
 
-    res.redirect('/admin/user');
+    res.redirect('/admin/user/index');
   }
 }
